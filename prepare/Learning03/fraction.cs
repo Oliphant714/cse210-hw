@@ -10,7 +10,7 @@ public class Fraction
         _botNum = 1;
     }
 
-    public Fraction(int topInput) //Setting the default denominator to 0 if there is no denominator input
+    public Fraction(int topInput) //Setting the default denominator to 1 if there is no denominator input
     {
         _topNum = topInput;
         _botNum = 1;
