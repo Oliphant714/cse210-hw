@@ -6,17 +6,14 @@ namespace ScriptureApp
     {
         static void Main(string[] args)
         {
-            // Path to the JSON file containing scripture data
             string filePath = "scripture.json";
 
-            // Load the scripture from the JSON file
             Scripture scripture = Scripture.LoadFromJson(filePath);
 
             Console.WriteLine("Press Enter to begin or type 'quit' to exit.");
             string input = Console.ReadLine();
             if (input.ToLower() == "quit") return;
 
-            // Display scripture with hidden words
             while (!scripture.IsCompletelyHidden())
             {
                 Console.Clear();

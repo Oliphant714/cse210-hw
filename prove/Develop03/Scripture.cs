@@ -26,7 +26,7 @@ namespace ScriptureApp
         public static Scripture LoadFromJson(string filePath)
         {
             var scriptures = JsonConvert.DeserializeObject<List<ScriptureJson>>(File.ReadAllText(filePath));
-            var scripture = scriptures[0];  // Choose the first scripture (or handle logic to select)
+            var scripture = scriptures[0];
             var reference = new Reference(scripture.Book, scripture.StartVerse, scripture.EndVerse);
             return new Scripture(reference, scripture.Text);
         }
