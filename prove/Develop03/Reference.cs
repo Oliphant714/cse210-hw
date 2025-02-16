@@ -1,30 +1,27 @@
-class Reference
+public class Refer
 {
-    private string _book;
-    private int _chapter;
-    private int _startVerse;
-    private int _endVerse;
+    // Public properties to access the fields
+    public string Book { get; private set; }
 
-    public Reference(string book, int chapter, int verse)
+    public int StartVerse { get; private set; }
+
+    public int EndVerse { get; private set; }
+
+    public Refer() { }
+
+    // Constructor for a single verse
+    public Refer(string book, int startVerse)
     {
-        _book = book;
-        _chapter = chapter;
-        _startVerse = verse;
-        _endVerse = verse;
+        Book = book;
+        StartVerse = startVerse;
+        EndVerse = startVerse;  // For single verse
     }
 
-    public Reference(string book, int chapter, int startVerse, int endVerse)
+    // Constructor for a verse range
+    public Refer(string book, int startVerse, int endVerse)
     {
-        _book = book;
-        _chapter = chapter;
-        _startVerse = startVerse;
-        _endVerse = endVerse;
-    }
-
-    public string GetFormattedReference()
-    {
-        return _startVerse == _endVerse
-            ? $"{_book} {_chapter}:{_startVerse}"
-            : $"{_book} {_chapter}:{_startVerse}-{_endVerse}";
+        Book = book;
+        StartVerse = startVerse;
+        EndVerse = endVerse;
     }
 }

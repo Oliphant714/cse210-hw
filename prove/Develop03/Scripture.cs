@@ -1,60 +1,25 @@
-using System;
-using System.Collections.Generic;
-using System.IO;
-using Newtonsoft.Json;
+using System.Text.Json.Serialization;
 
-namespace ScriptureApp
+public class Scripture
 {
-    public class Scripture
+    // Public properties to access the fields
+    public Refer Reference { get; private set; }
+
+    public string Text { get; private set; }
+
+    public Scripture() {}
+
+    // Constructor for initializing Scripture
+    public Scripture(Refer reference, string text)
     {
-        private Reference _reference;
-        private List<string> _words;
-        private List<bool> _hiddenWords;
-        private Random _random = new Random();
+        Reference = reference;
+        Text = text;
+    }
 
-        public Scripture(Reference reference, string text)
-        {
-            _reference = reference;
-            _words = text.Split(' ').ToList();
-            _hiddenWords = new List<bool>(_words.Count);
-            for (int i = 0; i < _words.Count; i++)
-            {
-                _hiddenWords.Add(false);
-            }
-        }
-
-        public static Scripture LoadFromJson(string filePath)
-        {
-            var scriptures = JsonConvert.DeserializeObject<List<ScriptureJson>>(File.ReadAllText(filePath));
-            var scripture = scriptures[0];
-            var reference = new Reference(scripture.Book, scripture.StartVerse, scripture.EndVerse);
-            return new Scripture(reference, scripture.Text);
-        }
-
-        public string GetDisplayText()
-        {
-            string referenceText = _reference.GetFormattedReference();
-            string wordsText = string.Join(" ", _words.Select((word, index) => _hiddenWords[index] ? "_____" : word));
-            return $"{referenceText}\n{wordsText}";
-        }
-
-        public void HideRandomWord()
-        {
-            var visibleWordIndices = _hiddenWords
-                .Select((isHidden, index) => new { isHidden, index })
-                .Where(x => !x.isHidden)
-                .Select(x => x.index)
-                .ToList();
-
-            if (visibleWordIndices.Count == 0) return;
-
-            int index = visibleWordIndices[_random.Next(visibleWordIndices.Count)];
-            _hiddenWords[index] = true;
-        }
-
-        public bool IsCompletelyHidden()
-        {
-            return _hiddenWords.All(isHidden => isHidden);
-        }
+    // Public method to display scripture in the correct format
+    public void DisplayScripture()
+    {
+        Console.WriteLine($"Scripture Reference: {Reference.Book} {Reference.StartVerse}-{Reference.EndVerse}");
+        Console.WriteLine($"Text: {Text}");
     }
 }

@@ -1,36 +1,37 @@
-using System;
+using System.Text.Json;
 
-namespace ScriptureApp
+class Program
 {
-    class Program
+    static void Main(string[] args)
     {
-        static void Main(string[] args)
+        string filePath = "C:/Users/Isaac/OneDrive/Documents/Semester 5/cse210/cse210-hw/prove/Develop03/scripture.json";  // Make sure the file is in your project directory
+
+        if (File.Exists(filePath))
         {
-            string filePath = "scripture.json";
+            // Read the file content
+            string jsonContent = File.ReadAllText(filePath);
 
-            Scripture scripture = Scripture.LoadFromJson(filePath);
-
-            Console.WriteLine("Press Enter to begin or type 'quit' to exit.");
-            string input = Console.ReadLine();
-            if (input.ToLower() == "quit") return;
-
-            while (!scripture.IsCompletelyHidden())
+            // Step 2: Deserialize the JSON into an object (using System.Text.Json)
+            try
             {
-                Console.Clear();
-                Console.WriteLine(scripture.GetDisplayText());
-                Console.WriteLine("Press Enter to hide a word or type 'quit' to exit.");
-                input = Console.ReadLine();
+                var scripture = JsonSerializer.Deserialize<Scripture>(jsonContent);
 
-                if (input.ToLower() == "quit")
-                    break;
-
-                scripture.HideRandomWord();
+                // Step 3: Display the scripture
+                if (scripture != null)
+                {
+                    scripture.DisplayScripture();
+                }
             }
-
-            Console.Clear();
-            Console.WriteLine("All words are hidden!");
-            Console.WriteLine("Final scripture: ");
-            Console.WriteLine(scripture.GetDisplayText());
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error deserializing JSON: {ex.Message}");
+            }
         }
+        else
+        {
+            Console.WriteLine("The file does not exist.");
+        }
+
+
     }
 }
