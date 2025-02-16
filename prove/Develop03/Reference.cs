@@ -5,6 +5,15 @@ public class Refer
     public int StartVerse { get; private set; }
     public int EndVerse { get; private set; }
 
+    public Refer(){}
+
+    public Refer(string book, int chapter, int verse)
+    {
+        Book = book;
+        Chapter = chapter;
+        StartVerse = verse;
+        EndVerse = verse;
+    }
     public Refer(string book, int chapter, int startVerse, int endVerse)
     {
         Book = book;
@@ -12,9 +21,8 @@ public class Refer
         StartVerse = startVerse;
         EndVerse = endVerse;
     }
-
     public override string ToString()
     {
-        return $"{Book} {Chapter}: {StartVerse}-{EndVerse}";
+        return StartVerse == EndVerse ? $"{Book} {Chapter}:{StartVerse}" : $"{Book} {Chapter}:{StartVerse}-{EndVerse}";
     }
 }

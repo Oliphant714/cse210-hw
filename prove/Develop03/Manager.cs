@@ -42,10 +42,13 @@ public class ScriptureManager
         }
 
         Console.Write("Enter the number of the scripture you want to view: ");
+        
         if (int.TryParse(Console.ReadLine(), out int index) && index > 0 && index <= _scriptures.Count)
         {
-            _scriptures[index - 1].DisplayScripture();
-        }
+        Scripture selected = _scriptures[index - 1];  // Correctly get the selected scripture
+        selected.ResetWords();  // Reset words to their original state before displaying
+        selected.DisplayScripture();  // Display the scripture
+    }
         else
         {
             Console.WriteLine("\nInvalid selection.\n");
@@ -84,43 +87,49 @@ public class ScriptureManager
         Console.WriteLine("\nScripture added successfully!\n");
     }
     public void MemorizeScripture()
+{
+    if (_scriptures.Count == 0)
     {
-        if (_scriptures.Count == 0)
-        {
-            Console.WriteLine("\nNo scriptures available.\n");
-            return;
-        }
+        Console.WriteLine("\nNo scriptures available.\n");
+        return;
+    }
 
-        Console.WriteLine("\nAvailable Scriptures for Memorization:");
-        for (int i = 0; i < _scriptures.Count; i++)
-        {
-            Console.WriteLine($"{i + 1}. {_scriptures[i].Reference}");
-        }
+    Console.WriteLine("\nAvailable Scriptures for Memorization:");
+    for (int i = 0; i < _scriptures.Count; i++)
+    {
+        Console.WriteLine($"{i + 1}. {_scriptures[i].Reference}");
+    }
 
-        Console.Write("Enter the number of the scripture to practice memorizing: ");
-        if (int.TryParse(Console.ReadLine(), out int index) && index > 0 && index <= _scriptures.Count)
-        {
-            Scripture selected = _scriptures[index - 1];
+    Console.Write("Enter the number of the scripture to practice memorizing: ");
+    if (int.TryParse(Console.ReadLine(), out int index) && index > 0 && index <= _scriptures.Count)
+    {
+        Scripture selected = _scriptures[index - 1];
+        Console.Clear();
+        
+        Console.WriteLine("\nMemorization Mode - Try to Recall the Verse:");
 
-            Console.Clear();
-            Console.WriteLine("\nMemorization Mode - Try to Recall the Verse:");
-            while (true)
+        while (!selected.AllWordsHidden())
+        {
+            selected.DisplayScripture(hideLetters: true);  // Hide some letters
+            Console.Write("\nPress Enter to hide more words, or type 'quit' to return to menu: ");
+            string input = Console.ReadLine();
+
+            if (input.ToLower() == "quit")
             {
-                selected.DisplayScripture(hideLetters: true);
-                Console.Write("\nPress Enter to reveal the full verse or type 'exit' to return to menu: ");
-                string input = Console.ReadLine();
-                if (input.ToLower() == "exit")
-                    break;
-                Console.Clear();
-                selected.DisplayScripture();
-                Console.WriteLine("\nPress Enter to continue...");
-                Console.ReadLine();
                 break;
             }
+
+            selected.HideWords(2);  // Hide 2 new words per round
+            Console.Clear();
         }
-        else
-        {
-            Console.WriteLine("\nInvalid selection.\n");
-        }
+        
+        Console.WriteLine("\nAll words are hidden. Memorization complete!\n");
+        selected.ResetWords();  // Reset words to their original state after memorization
     }
+    else
+    {
+        Console.WriteLine("\nInvalid selection.\n");
+    }
+}
+
 }
