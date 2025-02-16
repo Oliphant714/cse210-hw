@@ -1,9 +1,38 @@
-{
-    "reference": {
-      "book": "John",
-      "startVerse": 3,
-      "endVerse": 3
+[
+  {
+    "Reference": {
+      "Book": "John",
+      "Chapter": 3,
+      "StartVerse": 16,
+      "EndVerse": 16
     },
-    "text": "For God so loved the world..."
+    "Text": "For God so loved the world..."
+  },
+  {
+    "Reference": {
+      "Book": "Psalms",
+      "Chapter": 23,
+      "StartVerse": 1,
+      "EndVerse": 1
+    },
+    "Text": "The Lord is my shepherd; I shall not want."
+  },
+  {
+    "Reference": {
+      "Book": "1 Nephi",
+      "Chapter": 3,
+      "StartVerse": 7,
+      "EndVerse": 7
+    },
+    "Text": "I will go and do"
+  },
+  {
+    "Reference": {
+      "Book": "Genesis",
+      "Chapter": 1,
+      "StartVerse": 1,
+      "EndVerse": 3
+    },
+    "Text": "In the beginning God created the heaven and the earth. And the earth was without form, and void; and darkness was upon the face of the deep. And the Spirit of God moved upon the face of the waters. And God said, Let there be light: and there was light."
   }
-  
+]

@@ -2,36 +2,45 @@ using System.Text.Json;
 
 class Program
 {
-    static void Main(string[] args)
+    static void Main()
     {
-        string filePath = "C:/Users/Isaac/OneDrive/Documents/Semester 5/cse210/cse210-hw/prove/Develop03/scripture.json";  // Make sure the file is in your project directory
+        ScriptureManager manager = new ScriptureManager("C:/Users/Isaac/OneDrive/Documents/Semester 5/cse210/cse210-hw/prove/Develop03/scripture.json");
+        bool running = true;
 
-        if (File.Exists(filePath))
-        {
-            // Read the file content
-            string jsonContent = File.ReadAllText(filePath);
+        while (running)
+        while (running)
+{
+    Console.WriteLine("Menu:");
+    Console.WriteLine("1. View Scripture");
+    Console.WriteLine("2. Add Scripture");
+    Console.WriteLine("3. Memorize Scripture");
+    Console.WriteLine("4. Clear Screen");
+    Console.WriteLine("5. Exit");
+    Console.Write("Choose an option: ");
 
-            // Step 2: Deserialize the JSON into an object (using System.Text.Json)
-            try
-            {
-                var scripture = JsonSerializer.Deserialize<Scripture>(jsonContent);
+    string choice = Console.ReadLine();
 
-                // Step 3: Display the scripture
-                if (scripture != null)
-                {
-                    scripture.DisplayScripture();
-                }
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"Error deserializing JSON: {ex.Message}");
-            }
+    switch (choice)
+    {
+        case "1":
+            manager.ViewScriptures();
+            break;
+        case "2":
+            manager.AddScripture();
+            break;
+        case "3":
+            manager.MemorizeScripture();
+            break;
+        case "4":
+            Console.Clear();
+            break;
+        case "5":
+            running = false;
+            break;
+        default:
+            Console.WriteLine("Invalid option. Please try again.");
+            break;
+    }
         }
-        else
-        {
-            Console.WriteLine("The file does not exist.");
-        }
-
-
     }
 }
