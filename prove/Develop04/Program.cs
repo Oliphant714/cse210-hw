@@ -1,36 +1,57 @@
 using System;
 
-public class Program
+class Program
 {
-    public static void Main()
-    {
+    static void Main()
+    {  
         while (true)
         {
             Console.Clear();
-            Console.WriteLine("Mindfulness Program\n");
+            Console.WriteLine("Menu:");
             Console.WriteLine("1. Breathing Activity");
             Console.WriteLine("2. Reflection Activity");
             Console.WriteLine("3. Listing Activity");
-            Console.WriteLine("4. Exit");
-            Console.Write("\nChoose an option: ");
+            Console.WriteLine("4. Random Activity");
+            Console.WriteLine("5. Exit");
+            Console.Write("Select an option: ");
 
             string choice = Console.ReadLine();
-            Activity activity = choice switch
+
+            if (choice == "5")
+                Console.WriteLine("Thank you for enhancing your mental health. Goodbye!");
+                break;
+
+            List<Action> activities = new List<Action>
             {
-                "1" => new BreathingActivity(),
-                "2" => new ReflectionActivity(),
-                "3" => new ListingActivity(),
-                "4" => null,
-                _ => null
+                () => new BreathingActivity().Start(),
+                () => new ReflectionActivity().Start(),
+                () => new ListingActivity().Start()
             };
 
-            if (activity == null)
+            Random random = new Random();
+
+            switch (choice)
             {
-                Console.WriteLine("Goodbye!");
-                break;
+                case "1":
+                    activities[0]();
+                    break;
+                case "2":
+                    activities[1]();
+                    break;
+                case "3":
+                    activities[2]();
+                    break;
+                case "4":
+                    int randomIndex = random.Next(activities.Count);
+                    activities[randomIndex]();
+                    break;
+                default:
+                    Console.WriteLine("Invalid choice. Please select again.");
+                    break;
             }
 
-            activity.Start();
+            Console.WriteLine("\nPress Enter to return to the menu...");
+            Console.ReadLine();
         }
     }
 }
