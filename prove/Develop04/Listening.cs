@@ -33,7 +33,7 @@ public class ListingActivity : Activity
             if (!string.IsNullOrWhiteSpace(input))
                 responses.Add(input);
 
-            elapsed += 3;  // Assuming user takes ~3 seconds per input
+            elapsed += 3;
         }
 
         Console.WriteLine($"\nYou listed {responses.Count} items!");
