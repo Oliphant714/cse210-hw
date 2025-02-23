@@ -1,9 +1,36 @@
 using System;
 
-class Program
+public class Program
 {
-    static void Main(string[] args)
+    public static void Main()
     {
-        Console.WriteLine("Hello Develop04 World!");
+        while (true)
+        {
+            Console.Clear();
+            Console.WriteLine("Mindfulness Program\n");
+            Console.WriteLine("1. Breathing Activity");
+            Console.WriteLine("2. Reflection Activity");
+            Console.WriteLine("3. Listing Activity");
+            Console.WriteLine("4. Exit");
+            Console.Write("\nChoose an option: ");
+
+            string choice = Console.ReadLine();
+            Activity activity = choice switch
+            {
+                "1" => new BreathingActivity(),
+                "2" => new ReflectionActivity(),
+                "3" => new ListingActivity(),
+                "4" => null,
+                _ => null
+            };
+
+            if (activity == null)
+            {
+                Console.WriteLine("Goodbye!");
+                break;
+            }
+
+            activity.Start();
+        }
     }
 }
