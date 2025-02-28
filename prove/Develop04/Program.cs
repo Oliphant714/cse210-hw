@@ -18,9 +18,10 @@ class Program
             string choice = Console.ReadLine();
 
             if (choice == "5")
+            {
                 Console.WriteLine("Thank you for enhancing your mental health. Goodbye!");
                 break;
-
+            }
             List<Action> activities = new List<Action>
             {
                 () => new BreathingActivity().Start(),
