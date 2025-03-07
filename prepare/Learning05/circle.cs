@@ -6,8 +6,7 @@ public class Circle : Shape
     {
         _radius = radius;
     }
-
-    // Notice the use of the override keyword here
+    
     public override double GetArea()
     {
         return _radius * _radius * Math.PI;
