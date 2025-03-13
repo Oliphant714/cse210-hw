@@ -1,14 +1,16 @@
 abstract class Goal
 {
-    protected string name;
-    protected int points;
+    public string Name { get; protected set; }
+    public int Points { get; protected set; }
+    public bool IsComplete { get; protected set; }
     
     public Goal(string name, int points)
     {
-        this.name = name;
-        this.points = points;
+        Name = name;
+        Points = points;
+        IsComplete = false;
     }
-
-    public abstract int RecordEvent(); // Polymorphism: Different goals override this
-    public abstract string GetStatus(); // Polymorphism: Different goals display status differently
+    
+    public abstract int Complete();
+    public abstract string Status();
 }

@@ -1,53 +1,56 @@
-class GoalManager
+class GameManager
 {
-    private List<Goal> goals = new List<Goal>();
-    private int score = 0;
-
-    public void CreateGoal()
+    private List<Goal> _goals = new List<Goal>();
+    private BossMonster _boss;
+    private int _score;
+    private int _bossLevel;
+    
+    public GameManager()
     {
-        Console.WriteLine("Choose goal type: 1) Simple 2) Eternal 3) Checklist");
-        int choice = int.Parse(Console.ReadLine());
-
-        Console.Write("Enter goal name: ");
-        string name = Console.ReadLine();
-        Console.Write("Enter points: ");
-        int points = int.Parse(Console.ReadLine());
-
-        switch (choice)
+        _score = 0;
+        _bossLevel = 1;
+        GenerateNewBoss();
+    }
+    
+    public void CreateGoal(Goal goal)
+    {
+        _goals.Add(goal);
+    }
+    
+    private void GenerateNewBoss()
+    {
+        _boss = new BossMonster($"Boss Monster Lv. {_bossLevel}", _bossLevel * 100);
+    }
+    
+    public void CompleteGoal(int index)
+    {
+        if (index >= 0 && index < _goals.Count)
         {
-            case 1:
-                goals.Add(new SimpleGoal(name, points));
-                break;
-            case 2:
-                goals.Add(new EternalGoal(name, points));
-                break;
-            case 3:
-                Console.Write("Enter target count: ");
-                int target = int.Parse(Console.ReadLine());
-                Console.Write("Enter bonus points: ");
-                int bonus = int.Parse(Console.ReadLine());
-                goals.Add(new ChecklistGoal(name, points, target, bonus));
-                break;
+            int pointsEarned = _goals[index].Complete();
+            _score += pointsEarned;
+            _boss.TakeDamage(pointsEarned);
+            
+            Console.WriteLine($"You earned {pointsEarned} points!");
+            if (_boss.IsDefeated())
+            {
+                Console.WriteLine($"You defeated {_boss.Name}!");
+                _bossLevel++;
+                GenerateNewBoss();
+            }
         }
     }
-
-    public void RecordEvent()
-    {
-        Console.WriteLine("Select a goal to record:");
-        for (int i = 0; i < goals.Count; i++)
-        {
-            Console.WriteLine($"{i + 1}. {goals[i].GetStatus()}");
-        }
-        int index = int.Parse(Console.ReadLine()) - 1;
-        score += goals[index].RecordEvent();
-    }
-
+    
     public void ShowGoals()
     {
-        foreach (var goal in goals)
+        for (int i = 0; i < _goals.Count; i++)
         {
-            Console.WriteLine(goal.GetStatus());
+            Console.WriteLine($"{i + 1}. {_goals[i].Status()}");
         }
-        Console.WriteLine($"Current Score: {score}");
+    }
+    
+    public void ShowStatus()
+    {
+        Console.WriteLine($"Score: {_score}");
+        Console.WriteLine(_boss.Status());
     }
 }

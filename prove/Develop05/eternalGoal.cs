@@ -1,14 +1,14 @@
 class EternalGoal : Goal
 {
     public EternalGoal(string name, int points) : base(name, points) { }
-
-    public override int RecordEvent()
+    
+    public override int Complete()
     {
-        return points; // Always earns points
+        return Points;
     }
-
-    public override string GetStatus()
+    
+    public override string Status()
     {
-        return "[∞] " + name; // Always open
+        return "[∞] " + Name;
     }
 }

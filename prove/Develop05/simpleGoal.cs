@@ -1,24 +1,19 @@
 class SimpleGoal : Goal
 {
-    private bool isCompleted;
+    public SimpleGoal(string name, int points) : base(name, points) { }
 
-    public SimpleGoal(string name, int points) : base(name, points)
+    public override int Complete()
     {
-        isCompleted = false;
-    }
-
-    public override int RecordEvent()
-    {
-        if (!isCompleted)
+        if (!IsComplete)
         {
-            isCompleted = true;
-            return points;
+            IsComplete = true;
+            return Points;
         }
-        return 0; // No extra points if already completed
+        return 0;
     }
 
-    public override string GetStatus()
+    public override string Status()
     {
-        return isCompleted ? "[X] " + name : "[ ] " + name;
+        return IsComplete ? "[X] " + Name : "[ ] " + Name;
     }
 }

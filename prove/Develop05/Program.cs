@@ -2,33 +2,32 @@ class Program
 {
     static void Main()
     {
-        GoalManager manager = new GoalManager();
+        GameManager game = new GameManager();
+
+        game.CreateGoal(new SimpleGoal("Run a marathon", 1000));
+        game.CreateGoal(new EternalGoal("Read scriptures", 100));
+        game.CreateGoal(new ChecklistGoal("Attend temple", 50, 10, 500));
 
         while (true)
         {
             Console.Clear();
-            Console.WriteLine("1. Create Goal");
-            Console.WriteLine("2. Record Event");
-            Console.WriteLine("3. Show Goals & Score");
-            Console.WriteLine("4. Exit");
-
+            game.ShowStatus();
+            Console.WriteLine("\nGoals:");
+            game.ShowGoals();
+            
+            Console.WriteLine("\n1. Complete a Goal");
+            Console.WriteLine("2. Exit");
+            Console.Write("Choose an option: ");
             string choice = Console.ReadLine();
-
-            switch (choice)
+            
+            if (choice == "2") break;
+            if (choice == "1")
             {
-                case "1":
-                    manager.CreateGoal();
-                    break;
-                case "2":
-                    manager.RecordEvent();
-                    break;
-                case "3":
-                    manager.ShowGoals();
-                    Console.WriteLine("Press Enter to continue...");
-                    Console.ReadLine();
-                    break;
-                case "4":
-                    return;
+                Console.Write("Enter goal number: ");
+                if (int.TryParse(Console.ReadLine(), out int goalIndex))
+                {
+                    game.CompleteGoal(goalIndex - 1);
+                }
             }
         }
     }
