@@ -8,11 +8,11 @@ class GameManager
     private BossMonster _boss;
     private int _score;
     private int _bossLevel;
-    private const string SaveFilePath = "C:/Users/Isaac/OneDrive/Documents/Semester 5/cse210/cse210-hw/prove/Develop05/game_save.json"; // Save file location
+    private const string SaveFilePath = "C:/Users/Isaac/OneDrive/Documents/Semester 5/cse210/cse210-hw/prove/Develop05/game_save.json";
 
     public GameManager()
 {
-    if (!LoadGame()) // Try to load, otherwise start fresh
+    if (!LoadGame())
     {
         _score = 0;
         _bossLevel = 1;
@@ -35,16 +35,12 @@ class GameManager
     Console.WriteLine("\nGame saved successfully!");
 }
 
-
-
-
-
     public bool LoadGame()
 {
     if (!File.Exists(SaveFilePath))
     {
         Console.WriteLine("Save file does not exist.");
-        return false; // No save file exists
+        return false;
     }
 
     try
@@ -57,7 +53,10 @@ class GameManager
         {
             _score = saveData.Score;
             _bossLevel = saveData.BossLevel;
-            _boss = new BossMonster($"Boss Monster Lv. {_bossLevel}", saveData.BossHealth);
+
+            int calculatedMaxHealth = _bossLevel * 100;
+            _boss = new BossMonster($"Boss Monster Lv. {_bossLevel}", calculatedMaxHealth);
+            _boss.TakeDamage(calculatedMaxHealth - saveData.BossHealth);
 
             Console.WriteLine("\nGame loaded successfully!");
             return true;
