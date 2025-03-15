@@ -2,33 +2,53 @@ class Program
 {
     static void Main()
     {
-        GameManager game = new GameManager();
-
-        game.CreateGoal(new SimpleGoal("Run a marathon", 1000));
-        game.CreateGoal(new EternalGoal("Read scriptures", 100));
-        game.CreateGoal(new ChecklistGoal("Attend temple", 50, 10, 500));
-
+        GameManager gameManager = new GameManager();
+        
         while (true)
         {
             Console.Clear();
-            game.ShowStatus();
-            Console.WriteLine("\nGoals:");
-            game.ShowGoals();
+            Console.WriteLine("\n===== Eternal Quest Menu =====");
+            Console.WriteLine("1. Record Goal Completion");
+            Console.WriteLine("2. Show Goals");
+            Console.WriteLine("3. Create New Goal");
+            Console.WriteLine("4. Show Status");
+            Console.WriteLine("5. Exit");
+            Console.Write("Select an option: ");
             
-            Console.WriteLine("\n1. Complete a Goal");
-            Console.WriteLine("2. Exit");
-            Console.Write("Choose an option: ");
             string choice = Console.ReadLine();
-            
-            if (choice == "2") break;
-            if (choice == "1")
+
+            switch (choice)
             {
-                Console.Write("Enter goal number: ");
-                if (int.TryParse(Console.ReadLine(), out int goalIndex))
-                {
-                    game.CompleteGoal(goalIndex - 1);
-                }
+                case "1":
+                    gameManager.ShowGoals();
+                    Console.Write("Enter goal number to complete: ");
+                    if (int.TryParse(Console.ReadLine(), out int index))
+                    {
+                        gameManager.CompleteGoal(index - 1);
+                    }
+                    else
+                    {
+                        Console.WriteLine("Invalid input.");
+                    }
+                    break;
+                case "2":
+                    gameManager.ShowGoals();
+                    break;
+                case "3":
+                    gameManager.CreateGoal();
+                    break;
+                case "4":
+                    gameManager.ShowStatus();
+                    break;
+                case "5":
+                    return;
+                default:
+                    Console.WriteLine("Invalid choice.");
+                    break;
             }
+
+            Console.WriteLine("\nPress Enter to continue...");
+            Console.ReadLine();
         }
     }
 }
