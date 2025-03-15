@@ -3,7 +3,7 @@ class Program
     static void Main()
     {
         GameManager gameManager = new GameManager();
-        
+
         while (true)
         {
             Console.Clear();
@@ -12,9 +12,10 @@ class Program
             Console.WriteLine("1. Record Goal Completion");
             Console.WriteLine("2. Show Goals");
             Console.WriteLine("3. Create New Goal");
-            Console.WriteLine("4. Exit");
+            Console.WriteLine("4. Save Game");
+            Console.WriteLine("5. Exit");
             Console.Write("Select an option: ");
-            
+
             string choice = Console.ReadLine();
 
             switch (choice)
@@ -38,6 +39,14 @@ class Program
                     gameManager.CreateGoal();
                     break;
                 case "4":
+                    gameManager.SaveGame();
+                    break;
+                case "5":
+                    Console.Write("Would you like to save before exiting? (y/n): ");
+                    if (Console.ReadLine().ToLower() == "y")
+                    {
+                        gameManager.SaveGame();
+                    }
                     return;
                 default:
                     Console.WriteLine("Invalid choice.");
