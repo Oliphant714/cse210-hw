@@ -7,12 +7,12 @@ class Program
         while (true)
         {
             Console.Clear();
+            gameManager.ShowStatus();
             Console.WriteLine("\n===== Eternal Quest Menu =====");
             Console.WriteLine("1. Record Goal Completion");
             Console.WriteLine("2. Show Goals");
             Console.WriteLine("3. Create New Goal");
-            Console.WriteLine("4. Show Status");
-            Console.WriteLine("5. Exit");
+            Console.WriteLine("4. Exit");
             Console.Write("Select an option: ");
             
             string choice = Console.ReadLine();
@@ -38,9 +38,6 @@ class Program
                     gameManager.CreateGoal();
                     break;
                 case "4":
-                    gameManager.ShowStatus();
-                    break;
-                case "5":
                     return;
                 default:
                     Console.WriteLine("Invalid choice.");
