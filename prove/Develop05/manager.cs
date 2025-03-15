@@ -8,17 +8,17 @@ class GameManager
     private BossMonster _boss;
     private int _score;
     private int _bossLevel;
-    private const string SaveFilePath = "cse210-hw/prove/Develop05/game_save.json"; // Save file location
+    private const string SaveFilePath = "C:/Users/Isaac/OneDrive/Documents/Semester 5/cse210/cse210-hw/prove/Develop05/game_save.json"; // Save file location
 
     public GameManager()
+{
+    if (!LoadGame()) // Try to load, otherwise start fresh
     {
-        if (!LoadGame()) // Try to load, otherwise start fresh
-        {
-            _score = 0;
-            _bossLevel = 1;
-            GenerateNewBoss();
-        }
+        _score = 0;
+        _bossLevel = 1;
+        GenerateNewBoss();
     }
+}
 
     public void SaveGame()
 {
