@@ -1,36 +1,43 @@
-// Base class for all characters
 public class Character
 {
+    // Now accessible to derived classes, but not to the outside world directly
+    protected int _level;
+    protected int _hitPoints;
+    protected int _armorClass;
+    protected int _strength;
+    protected int _dexterity;
+    protected int _constitution;
+    protected int _intelligence;
+    protected int _wisdom;
+    protected int _charisma;
+    protected int _proficiencyBonus;
+    protected string _weaponDamageType;
+    
     public string Name { get; set; }
-    public int Health { get; set; }
-    public int AttackPower { get; set; }
-    public int Defense { get; set; }
+    public int Level => _level;
+    public int HitPoints => _hitPoints;
+    public int ArmorClass => _armorClass;
+    public int ProficiencyBonus => _proficiencyBonus;
 
-    public Character(string name, int health, int attackPower, int defense)
+    public Character(string name, int level, int hitPoints, int armorClass, 
+                     int strength, int dexterity, int constitution, 
+                     int intelligence, int wisdom, int charisma, 
+                     int proficiencyBonus, string weaponDamageType)
     {
         Name = name;
-        Health = health;
-        AttackPower = attackPower;
-        Defense = defense;
+        _level = level;
+        _hitPoints = hitPoints;
+        _armorClass = armorClass;
+        _strength = strength;
+        _dexterity = dexterity;
+        _constitution = constitution;
+        _intelligence = intelligence;
+        _wisdom = wisdom;
+        _charisma = charisma;
+        _proficiencyBonus = proficiencyBonus;
+        _weaponDamageType = weaponDamageType;
     }
 
-    // Method to reduce health when character takes damage
-    public void TakeDamage(int damage)
-    {
-        int actualDamage = Math.Max(0, damage - Defense);
-        Health -= actualDamage;
-        Console.WriteLine($"{Name} takes {actualDamage} damage! Health: {Health}");
-    }
-
-    // Attack method returns attack power
-    public int Attack()
-    {
-        return AttackPower;
-    }
-
-    // Check if the character is defeated
-    public bool IsDefeated()
-    {
-        return Health <= 0;
-    }
+    // Add common character behavior methods if needed (such as calculating saving throws, etc.)
 }
+

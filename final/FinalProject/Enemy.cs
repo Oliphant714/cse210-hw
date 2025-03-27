@@ -1,19 +1,29 @@
-// Derived class for Enemies
 public class Enemy : Character
 {
-    public string EnemyType { get; set; }
-    public int AggressionLevel { get; set; }
+    private string _enemyType; // E.g., Goblin, Orc, Dragon, etc.
 
-    public Enemy(string name, int health, int attackPower, int defense, string enemyType, int aggressionLevel)
-        : base(name, health, attackPower, defense)
+    public string EnemyType => _enemyType;
+
+    public Enemy(string name, int level, int hitPoints, int armorClass,
+                 int strength, int dexterity, int constitution,
+                 int intelligence, int wisdom, int charisma,
+                 int proficiencyBonus, string weaponDamageType, string enemyType)
+        : base(name, level, hitPoints, armorClass, strength, dexterity, constitution,
+               intelligence, wisdom, charisma, proficiencyBonus, weaponDamageType)
     {
-        EnemyType = enemyType;
-        AggressionLevel = aggressionLevel;
+        _enemyType = enemyType;
     }
 
-    // Taunt method to provoke player
-    public void Taunt()
+    // Override to include enemy-specific abilities or traits (e.g., Breath Weapon for dragons)
+    public void UseEnemyAbility()
     {
-        Console.WriteLine($"{Name} taunts with aggression level {AggressionLevel}!");
+        if (_enemyType == "Dragon")
+        {
+            Console.WriteLine($"{Name} breathes fire!");
+        }
+        else if (_enemyType == "Goblin")
+        {
+            Console.WriteLine($"{Name} tries to ambush!");
+        }
     }
 }
