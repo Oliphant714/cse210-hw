@@ -1,29 +1,44 @@
 public class Enemy : Character
 {
-    private string _enemyType; // E.g., Goblin, Orc, Dragon, etc.
+    private string _enemyType;
+    private int _challengeRating;
 
     public string EnemyType => _enemyType;
+    public int ChallengeRating => _challengeRating;
 
     public Enemy(string name, int level, int hitPoints, int armorClass,
-                 int strength, int dexterity, int constitution,
-                 int intelligence, int wisdom, int charisma,
-                 int proficiencyBonus, string weaponDamageType, string enemyType)
-        : base(name, level, hitPoints, armorClass, strength, dexterity, constitution,
-               intelligence, wisdom, charisma, proficiencyBonus, weaponDamageType)
+                 AbilityScores abilities, int proficiencyBonus, 
+                 string weaponDamageType, string enemyType, int challengeRating)
+        : base(name, level, hitPoints, armorClass, abilities, proficiencyBonus, weaponDamageType)
     {
         _enemyType = enemyType;
+        _challengeRating = challengeRating;
     }
 
-    // Override to include enemy-specific abilities or traits (e.g., Breath Weapon for dragons)
-    public void UseEnemyAbility()
+    public void Attack(Character target)
     {
-        if (_enemyType == "Dragon")
+        int attackRoll = Dice.Roll(20) + ProficiencyBonus + Abilities.StrengthModifier;
+        Console.WriteLine($"{Name} attacks {target.Name} with a roll of {attackRoll}!");
+
+        if (attackRoll >= target.ArmorClass)
         {
-            Console.WriteLine($"{Name} breathes fire!");
+            int damage = Dice.Roll(8) + Abilities.StrengthModifier;
+            target.TakeDamage(damage);
+            Console.WriteLine($"{Name} hits {target.Name} for {damage} damage!");
         }
-        else if (_enemyType == "Goblin")
+        else
         {
-            Console.WriteLine($"{Name} tries to ambush!");
+            Console.WriteLine($"{Name} misses {target.Name}!");
+        }
+    }
+
+    public void TakeDamage(int damage)
+    {
+        HitPoints -= damage;
+        Console.WriteLine($"{Name} now has {HitPoints} HP remaining.");
+        if (HitPoints <= 0)
+        {
+            Console.WriteLine($"{Name} has been defeated!");
         }
     }
 }

@@ -1,44 +1,38 @@
-// Party class holding multiple PlayerCharacters
 public class Party
 {
-    public List<PlayerCharacter> Members { get; set; }
-    public string PartyName { get; set; }
+    private List<PlayerCharacter> _members;
 
-    public Party(string partyName)
+    public List<PlayerCharacter> Members => _members;
+
+    public Party()
     {
-        PartyName = partyName;
-        Members = new List<PlayerCharacter>();
+        _members = new List<PlayerCharacter>();
     }
 
-    // Add a new member to the party
-    public void AddCharacter(PlayerCharacter character)
+    public void AddMember(PlayerCharacter character)
     {
-        Members.Add(character);
-        Console.WriteLine($"{character.Name} added to the party {PartyName}.");
+        _members.Add(character);
+        Console.WriteLine($"{character.Name} has joined the party.");
     }
 
-    // Remove a character by name
-    public void RemoveCharacter(string name)
+    public void RemoveMember(PlayerCharacter character)
     {
-        var character = Members.Find(c => c.Name == name);
-        if (character != null)
+        if (_members.Remove(character))
         {
-            Members.Remove(character);
-            Console.WriteLine($"{name} removed from the party {PartyName}.");
+            Console.WriteLine($"{character.Name} has left the party.");
         }
         else
         {
-            Console.WriteLine($"{name} is not in the party.");
+            Console.WriteLine($"{character.Name} is not in the party.");
         }
     }
 
-    // Display the party's details
-    public void ShowPartyDetails()
+    public void DisplayParty()
     {
-        Console.WriteLine($"Party: {PartyName}");
-        foreach (var member in Members)
+        Console.WriteLine("Party Members:");
+        foreach (var member in _members)
         {
-            Console.WriteLine($"- {member.Name} ({member.ClassType})");
+            Console.WriteLine($"{member.Name} (Level {member.Level}, {member.ClassType}, HP: {member.HitPoints})");
         }
     }
 }

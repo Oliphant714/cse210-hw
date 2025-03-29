@@ -1,53 +1,42 @@
-// GameManager class to manage the saving and loading of parties and encounters
 public class GameManager
 {
-    public List<Party> SavedParties { get; set; }
-    public List<Encounter> SavedEncounters { get; set; }
+    private Party _party;
+    private List<Enemy> _enemies;
 
     public GameManager()
     {
-        SavedParties = new List<Party>();
-        SavedEncounters = new List<Encounter>();
+        _party = new Party();
+        _enemies = new List<Enemy>();
     }
 
-    // Save a party
-    public void SaveParty(Party party)
+    public void SetupGame()
     {
-        SavedParties.Add(party);
-        Console.WriteLine($"Party {party.PartyName} saved!");
+        Console.WriteLine("Welcome to the D&D Combat Simulator!");
+        
+        // Create player characters
+        AbilityScores warriorAbilities = new AbilityScores(16, 12, 14, 10, 10, 8);
+        PlayerCharacter warrior = new PlayerCharacter("Aric", 3, 30, 16, warriorAbilities, 2, "Slashing", "Fighter");
+        
+        AbilityScores wizardAbilities = new AbilityScores(8, 14, 12, 16, 12, 10);
+        PlayerCharacter wizard = new PlayerCharacter("Elara", 3, 18, 12, wizardAbilities, 2, "Fire", "Wizard");
+
+        _party.AddMember(warrior);
+        _party.AddMember(wizard);
+
+        // Create enemies
+        AbilityScores goblinAbilities = new AbilityScores(10, 14, 12, 8, 10, 8);
+        Enemy goblin = new Enemy("Goblin", 1, 15, 13, goblinAbilities, 2, "Piercing", "Goblin", 1);
+        
+        AbilityScores orcAbilities = new AbilityScores(16, 12, 14, 8, 10, 8);
+        Enemy orc = new Enemy("Orc", 2, 20, 14, orcAbilities, 2, "Slashing", "Orc", 2);
+
+        _enemies.Add(goblin);
+        _enemies.Add(orc);
     }
 
-    // Load a party by name
-    public Party LoadParty(string partyName)
+    public void StartEncounter()
     {
-        var party = SavedParties.Find(p => p.PartyName == partyName);
-        if (party != null)
-        {
-            Console.WriteLine($"Loaded party: {party.PartyName}");
-        }
-        else
-        {
-            Console.WriteLine("Party not found.");
-        }
-        return party;
-    }
-
-    // Save an encounter
-    public void SaveEncounter(Encounter encounter)
-    {
-        SavedEncounters.Add(encounter);
-        Console.WriteLine("Encounter saved!");
-    }
-
-    // Load an encounter by index
-    public Encounter LoadEncounter(int encounterIndex)
-    {
-        if (encounterIndex >= 0 && encounterIndex < SavedEncounters.Count)
-        {
-            Console.WriteLine("Loaded encounter.");
-            return SavedEncounters[encounterIndex];
-        }
-        Console.WriteLine("Encounter not found.");
-        return null;
+        Encounter encounter = new Encounter(_party, _enemies);
+        encounter.Start();
     }
 }
