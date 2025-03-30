@@ -40,4 +40,11 @@ public class AbilityScores
             default: Strength++; break;
         }
     }
+
+    public static int GenerateRandom()
+{
+    Random random = new Random();
+    return random.Next(8, 18); // D&D Ability Score Range
+}
+
 }

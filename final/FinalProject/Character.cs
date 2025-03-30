@@ -1,12 +1,12 @@
 public class Character
 {
-    protected string Name { get; set; }
-    protected int Level { get; set; }
-    protected int HitPoints { get; set; }
-    protected int ArmorClass { get; set; }
-    protected int ProficiencyBonus { get; set; }
-    protected string WeaponDamageType { get; set; }
-    protected AbilityScores Abilities { get; set; }
+    public string Name { get; set; }
+    public int Level { get; set; }
+    public int HitPoints { get; set; }
+    public int ArmorClass { get; set; }
+    public int ProficiencyBonus { get; set; }
+    public string WeaponDamageType { get; set; }
+    public AbilityScores Abilities { get; set; }
 
     public Character(string name, int level, int hitPoints, int armorClass,
                      AbilityScores abilities, int proficiencyBonus, string weaponDamageType)
@@ -31,4 +31,18 @@ public class Character
             _ => 6
         };
     }
+
+    public int GetAbilityModifier(int abilityScore)
+    {
+        return (abilityScore - 10) / 2;
+    }
+
+   public void TakeDamage(int damage)
+{
+    _hitPoints -= damage;
+    if (_hitPoints < 0) _hitPoints = 0;
+    Console.WriteLine($"{Name} took {damage} damage! Remaining HP: {_hitPoints}");
+}
+
+
 }

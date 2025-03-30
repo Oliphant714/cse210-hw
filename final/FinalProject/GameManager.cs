@@ -1,3 +1,4 @@
+namespace FinalProject;
 public class GameManager
 {
     private Party _party;

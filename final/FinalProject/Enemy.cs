@@ -7,8 +7,8 @@ public class Enemy : Character
     public int ChallengeRating => _challengeRating;
 
     public Enemy(string name, int level, int hitPoints, int armorClass,
-                 AbilityScores abilities, int proficiencyBonus, 
-                 string weaponDamageType, string enemyType, int challengeRating)
+                 AbilityScores abilities, int proficiencyBonus, string weaponDamageType, 
+                 string enemyType, int challengeRating)
         : base(name, level, hitPoints, armorClass, abilities, proficiencyBonus, weaponDamageType)
     {
         _enemyType = enemyType;
@@ -17,28 +17,18 @@ public class Enemy : Character
 
     public void Attack(Character target)
     {
-        int attackRoll = Dice.Roll(20) + ProficiencyBonus + Abilities.StrengthModifier;
+        int attackRoll = DiceRoller.Roll(1, 20) + GetAbilityModifier("Strength") + ProficiencyBonus;
         Console.WriteLine($"{Name} attacks {target.Name} with a roll of {attackRoll}!");
 
         if (attackRoll >= target.ArmorClass)
         {
-            int damage = Dice.Roll(8) + Abilities.StrengthModifier;
+            int damage = DiceRoller.Roll(1, 8) + GetAbilityModifier("Strength"); 
             target.TakeDamage(damage);
             Console.WriteLine($"{Name} hits {target.Name} for {damage} damage!");
         }
         else
         {
             Console.WriteLine($"{Name} misses {target.Name}!");
-        }
-    }
-
-    public void TakeDamage(int damage)
-    {
-        HitPoints -= damage;
-        Console.WriteLine($"{Name} now has {HitPoints} HP remaining.");
-        if (HitPoints <= 0)
-        {
-            Console.WriteLine($"{Name} has been defeated!");
         }
     }
 }

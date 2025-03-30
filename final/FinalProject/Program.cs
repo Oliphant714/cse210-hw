@@ -1,9 +1,9 @@
-class Program
+using FinalProject;
+public class Program
 {
-    static void Main()
+    public static void Main(string[] args)
     {
         GameManager gameManager = new GameManager();
-        gameManager.SetupGame();
-        gameManager.StartEncounter();
+        gameManager.StartGame();
     }
 }
