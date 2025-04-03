@@ -109,8 +109,5 @@ public class EncounterManager
                 _enemyList.Add(enemy);
             }
         }
-
-        EncounterManager encounter = new EncounterManager();
-        encounter.StartEncounter();
     }
 }
