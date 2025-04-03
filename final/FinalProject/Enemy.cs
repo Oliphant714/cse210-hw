@@ -6,6 +6,10 @@ public class Enemy : Character
     public string EnemyType => _enemyType;
     public int ChallengeRating => _challengeRating;
 
+    public int GetStrengthModifier()  
+{
+    return GetAbilityModifier(Abilities.Strength);
+}
     public Enemy(string name, int level, int hitPoints, int armorClass,
                  AbilityScores abilities, int proficiencyBonus, string weaponDamageType, 
                  string enemyType, int challengeRating)
@@ -17,12 +21,12 @@ public class Enemy : Character
 
     public void Attack(Character target)
     {
-        int attackRoll = DiceRoller.Roll(1, 20) + GetAbilityModifier("Strength") + ProficiencyBonus;
+        int attackRoll = DiceRoller.Roll(1, 20) + GetStrengthModifier() + ProficiencyBonus;
         Console.WriteLine($"{Name} attacks {target.Name} with a roll of {attackRoll}!");
 
         if (attackRoll >= target.ArmorClass)
         {
-            int damage = DiceRoller.Roll(1, 8) + GetAbilityModifier("Strength"); 
+            int damage = DiceRoller.Roll(1, 8) + GetStrengthModifier(); 
             target.TakeDamage(damage);
             Console.WriteLine($"{Name} hits {target.Name} for {damage} damage!");
         }

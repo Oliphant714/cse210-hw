@@ -14,7 +14,14 @@ public class PlayerCharacter : Character
         _hitDie = GetHitDie(classType);
     }
 
-    int modifier = GetAbilityModifier(_strength);
+    public int GetStrengthModifier()  
+{
+    return GetAbilityModifier(Abilities.Strength);
+}
+    public int GetConstitutionModifier()
+    {
+        return GetAbilityModifier(Abilities.Constitution);
+    }
     private int GetHitDie(string classType)
     {
         return classType switch
@@ -25,15 +32,27 @@ public class PlayerCharacter : Character
             _ => 6
         };
     }
+    public int GetProficiencyBonus(int level)
+{
+    return level switch
+    {
+        <= 4 => 2,
+        <= 8 => 3,
+        <= 12 => 4,
+        <= 16 => 5,
+        _ => 6
+    };
+}
+
 
     public void Attack(Character target)
     {
-        int attackRoll = DiceRoller.Roll(1, 20) + GetAbilityModifier("Strength") + ProficiencyBonus;
+        int attackRoll = DiceRoller.Roll(1, 20) + GetStrengthModifier() + ProficiencyBonus;
         Console.WriteLine($"{Name} attacks {target.Name} with a roll of {attackRoll}!");
 
         if (attackRoll >= target.ArmorClass)
         {
-            int damage = DiceRoller.Roll(1, 8) + GetAbilityModifier("Strength"); 
+            int damage = DiceRoller.Roll(1, 8) + GetStrengthModifier(); 
             target.TakeDamage(damage);
             Console.WriteLine($"{Name} hits {target.Name} for {damage} damage!");
         }
@@ -51,18 +70,18 @@ public class PlayerCharacter : Character
 
     public void LevelUp()
     {
-        _level++;
-        _proficiencyBonus = GetProficiencyBonus(_level);
-        int hitPointsGained = DiceRoller.Roll(1, _hitDie) + GetAbilityModifier("Constitution");
-        _hitPoints += hitPointsGained;
+        Level++;
+        ProficiencyBonus = GetProficiencyBonus(Level);
+        int hitPointsGained = DiceRoller.Roll(1, _hitDie) + GetConstitutionModifier();
+        HitPoints += hitPointsGained;
 
-        if (_level == 4 || _level == 8 || _level == 12 || _level == 16 || _level == 19)
+        if (Level == 4 || Level == 8 || Level == 12 || Level == 16 || Level == 19)
         {
             ApplyAbilityScoreImprovement();
         }
 
-        Console.WriteLine($"{Name} has leveled up to level {_level}!");
-        Console.WriteLine($"New Proficiency Bonus: {_proficiencyBonus}");
-        Console.WriteLine($"Hit Points increased by {hitPointsGained}. Total HP: {_hitPoints}");
+        Console.WriteLine($"{Name} has leveled up to level {Level}!");
+        Console.WriteLine($"New Proficiency Bonus: {ProficiencyBonus}");
+        Console.WriteLine($"Hit Points increased by {hitPointsGained}. Total HP: {HitPoints}");
     }
 }

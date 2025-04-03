@@ -15,7 +15,7 @@ public class Character
         Level = level;
         HitPoints = hitPoints;
         ArmorClass = armorClass;
-        Abilities = abilities;
+        Abilities = abilities ?? new AbilityScores();
         ProficiencyBonus = proficiencyBonus;
         WeaponDamageType = weaponDamageType;
     }
@@ -39,9 +39,9 @@ public class Character
 
    public void TakeDamage(int damage)
 {
-    _hitPoints -= damage;
-    if (_hitPoints < 0) _hitPoints = 0;
-    Console.WriteLine($"{Name} took {damage} damage! Remaining HP: {_hitPoints}");
+    HitPoints -= damage;
+    if (HitPoints < 0) HitPoints = 0;
+    Console.WriteLine($"{Name} took {damage} damage! Remaining HP: {HitPoints}");
 }
 
 

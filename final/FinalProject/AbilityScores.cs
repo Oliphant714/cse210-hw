@@ -1,14 +1,22 @@
 public class AbilityScores
 {
-    public int Strength { get; private set; }
-    public int Dexterity { get; private set; }
-    public int Constitution { get; private set; }
-    public int Intelligence { get; private set; }
-    public int Wisdom { get; private set; }
-    public int Charisma { get; private set; }
+    public int Strength { get; set; }
+    public int Dexterity { get; set; }
+    public int Constitution { get; set; }
+    public int Intelligence { get; set; }
+    public int Wisdom { get; set; }
+    public int Charisma { get; set; }
 
-    public AbilityScores(int strength, int dexterity, int constitution, 
-                         int intelligence, int wisdom, int charisma)
+    public AbilityScores()
+    {
+        Strength = 10;
+        Dexterity = 10;
+        Constitution = 10;
+        Intelligence = 10;
+        Wisdom = 10;
+        Charisma = 10;
+    }
+    public AbilityScores(int strength, int dexterity, int constitution, int intelligence, int wisdom, int charisma)
     {
         Strength = strength;
         Dexterity = dexterity;
