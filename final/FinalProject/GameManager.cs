@@ -10,7 +10,7 @@ public class GameManager
         _enemies = new List<Enemy>();
     }
 
-    public void SetupGame()
+    public void StartGame()
     {
         Console.WriteLine("Welcome to the D&D Combat Simulator!");
         
