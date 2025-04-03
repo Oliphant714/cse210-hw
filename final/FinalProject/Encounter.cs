@@ -110,7 +110,7 @@ public class EncounterManager
             }
         }
 
-        Encounter encounter = new Encounter(_party.Members, _enemyList);
+        EncounterManager encounter = new EncounterManager();
         encounter.StartEncounter();
     }
 }
