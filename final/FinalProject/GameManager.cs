@@ -33,11 +33,16 @@ public class GameManager
 
         _enemies.Add(goblin);
         _enemies.Add(orc);
+
+        StartEncounter();
     }
 
-    public void StartEncounter()
-    {
-        Encounter encounter = new Encounter(_party, _enemies);
-        encounter.Start();
-    }
+  
+        public void StartEncounter()
+{
+    EncounterManager encounter = new EncounterManager();
+        encounter.StartEncounter();
+}
+
+    
 }

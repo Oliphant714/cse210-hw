@@ -84,7 +84,7 @@ public class EncounterManager
         }
     }
 
-    private void StartEncounter()
+    public void StartEncounter()
     {
         Console.WriteLine("Starting a new encounter...");
 
