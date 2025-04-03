@@ -1,3 +1,5 @@
+namespace FinalProject;
+using System;
 public class AbilityScores
 {
     public int Strength { get; set; }
@@ -49,10 +51,17 @@ public class AbilityScores
         }
     }
 
-    public static int GenerateRandom()
-{
-    Random random = new Random();
-    return random.Next(8, 18); // D&D Ability Score Range
-}
+    public static AbilityScores GenerateRandom()
+    {
+        Random random = new Random();
+        int strength = random.Next(8, 18);
+        int dexterity = random.Next(8, 18);
+        int constitution = random.Next(8, 18);
+        int intelligence = random.Next(8, 18);
+        int wisdom = random.Next(8, 18);
+        int charisma = random.Next(8, 18);
+
+        return new AbilityScores(strength, dexterity, constitution, intelligence, wisdom, charisma);
+    }
 
 }

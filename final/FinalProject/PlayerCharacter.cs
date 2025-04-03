@@ -1,3 +1,5 @@
+namespace FinalProject;
+using System;
 public class PlayerCharacter : Character
 {
     private string _classType;

@@ -1,3 +1,5 @@
+namespace FinalProject;
+using System;
 public class Enemy : Character
 {
     private string _enemyType;

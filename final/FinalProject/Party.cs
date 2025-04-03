@@ -1,3 +1,5 @@
+namespace FinalProject;
+using System;
 public class Party
 {
     private List<PlayerCharacter> _members;

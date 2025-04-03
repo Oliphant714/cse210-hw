@@ -1,11 +1,11 @@
-namespace FinalProjectEncounterSimulator;
+namespace FinalProject;
 using System;
-public class GameManager
+public class EncounterManager
 {
     private Party _party;
     private List<Enemy> _enemyList;
 
-    public GameManager()
+    public EncounterManager()
     {
         _party = new Party();
         _enemyList = new List<Enemy>();
@@ -69,8 +69,8 @@ public class GameManager
 
                 AbilityScores abilities = AbilityScores.GenerateRandom();
                 int level = 1;
-                int hp = DiceRoller.Roll(1, 10) + abilities.GetModifier("Constitution");
-                int ac = 10 + abilities.GetModifier("Dexterity");
+                int hp = DiceRoller.Roll(1, 10) + abilities.ConstitutionModifier;
+                int ac = 10 + abilities.DexterityModifier;
                 int proficiencyBonus = 2;
                 string weaponDamageType = "Slashing";
 

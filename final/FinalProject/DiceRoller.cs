@@ -1,3 +1,5 @@
+namespace FinalProject;
+using System;
 public static class DiceRoller
 {
     private static Random _rng = new Random();
