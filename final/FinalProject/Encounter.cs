@@ -102,7 +102,10 @@ public class EncounterManager
                 int proficiencyBonus = 2;
                 string damageType = "Piercing";
 
-                var enemy = new Enemy(name, level, hp, ac, abilities, proficiencyBonus, damageType);
+                string enemyType = "Goblin";
+                int challengeRating = 1;
+
+                var enemy = new Enemy(name, level, hp, ac, abilities, proficiencyBonus, damageType, enemyType, challengeRating);
                 _enemyList.Add(enemy);
             }
         }
