@@ -7,6 +7,16 @@ public static class SaveLoad
     private static string EnemyFile => Path.Combine(BasePath, "enemies.json");
     private static string WeaponFile => Path.Combine(BasePath, "weapons.json");
 
+    public static List<EnemyCharacter> AllEnemies { get; private set; } = new();
+    public static List<Weapon> AllWeapons { get; private set; } = new();
+
+    public static void Initialize()
+    {
+        Directory.CreateDirectory(PartyPath);
+        LoadAllEnemies();
+        LoadAllWeapons();
+    }
+
     public static void SaveParty(Party party)
     {
         Directory.CreateDirectory(PartyPath);
@@ -23,28 +33,52 @@ public static class SaveLoad
 
     public static void AddEnemy(EnemyCharacter enemy)
     {
-        List<EnemyCharacter> enemies = LoadEnemies();
-        enemies.Add(enemy);
-        File.WriteAllText(EnemyFile, JsonSerializer.Serialize(enemies, new JsonSerializerOptions { WriteIndented = true }));
+        AllEnemies.Add(enemy);
+        SaveAllEnemies();
     }
 
-    public static List<EnemyCharacter> LoadEnemies()
+    public static void SaveAllEnemies()
     {
-        if (!File.Exists(EnemyFile)) return new();
-        return JsonSerializer.Deserialize<List<EnemyCharacter>>(File.ReadAllText(EnemyFile));
+        File.WriteAllText(EnemyFile, JsonSerializer.Serialize(AllEnemies, new JsonSerializerOptions { WriteIndented = true }));
+    }
+
+    public static void LoadAllEnemies()
+    {
+        if (File.Exists(EnemyFile))
+        {
+            var enemies = JsonSerializer.Deserialize<List<EnemyCharacter>>(File.ReadAllText(EnemyFile));
+            if (enemies != null) AllEnemies = enemies;
+        }
+    }
+    public static void OverwriteEnemies(List<EnemyCharacter> enemies)
+{
+    File.WriteAllText(EnemyFile, JsonSerializer.Serialize(enemies, new JsonSerializerOptions { WriteIndented = true }));
+}
+
+
+    public static EnemyCharacter GetEnemyByName(string name)
+    {
+        return AllEnemies.FirstOrDefault(e => e.CharacterName.Equals(name, StringComparison.OrdinalIgnoreCase));
     }
 
     public static void AddWeapon(Weapon weapon)
     {
-        List<Weapon> weapons = LoadWeapons();
-        weapons.Add(weapon);
-        File.WriteAllText(WeaponFile, JsonSerializer.Serialize(weapons, new JsonSerializerOptions { WriteIndented = true }));
+        AllWeapons.Add(weapon);
+        SaveAllWeapons();
     }
 
-    public static List<Weapon> LoadWeapons()
+    public static void SaveAllWeapons()
     {
-        if (!File.Exists(WeaponFile)) return new();
-        return JsonSerializer.Deserialize<List<Weapon>>(File.ReadAllText(WeaponFile));
+        File.WriteAllText(WeaponFile, JsonSerializer.Serialize(AllWeapons, new JsonSerializerOptions { WriteIndented = true }));
+    }
+
+    public static void LoadAllWeapons()
+    {
+        if (File.Exists(WeaponFile))
+        {
+            var weapons = JsonSerializer.Deserialize<List<Weapon>>(File.ReadAllText(WeaponFile));
+            if (weapons != null) AllWeapons = weapons;
+        }
     }
 
     public static List<string> GetPartyNames()
